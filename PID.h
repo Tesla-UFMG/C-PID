@@ -36,22 +36,21 @@ __attribute__((always_inline)) static inline
 double PID_compute(PID_t* pid, double input)
 {
 	double error = pid->Setpoint-input;
-	/* y[n] = y[n-1] + A0 * x[n] + A1 * x[n-1] + A2 * x[n-2]  */
 	pid->output += (pid->C1 * error) +
 				   (pid->C0 * pid->error_state[0]) +
 				   (pid->C2 * (2.0*pid->input_state[0] - input - pid->input_state[1]));
 
-	//previnir windup
+	//prevenir windup
 	if (pid->output > pid->max_output) pid->output = pid->max_output;
 	if (pid->output < pid->min_output) pid->output = pid->min_output;
 
-	/* Update state */
+	/* atualizar estados */
 	pid->error_state[1] = pid->error_state[0];
 	pid->error_state[0] = error;
 	pid->input_state[1] = pid->input_state[0];
 	pid->input_state[0] = input;
 
-	/* return to application */
+	/* retorna saída */
 	return (pid->output);
 
 }
