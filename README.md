@@ -1,10 +1,12 @@
 # C-PID
-PID algorithm implemented in C.
+Standard PID algorithm implemented in C.
 
 ## Overview
-This is a simple, yet computationally-efficient implementation of a PID algorithm. It was discretized using *backward differentiation formula*, with the derivative component acting based on the measurement rather than on the error, thus, preventing *derivative kicks*.
+This is a simple, yet computationally-efficient implementation of a standard PID algorithm. It was discretized using *backward differentiation formula*, with the derivative component acting based on the measurement rather than on the error, thus, preventing *derivative kicks*.
 
 It's important to notice that, for best results, the computation function must be called within a fixed time period of `t`. `t` is used in the algorithm's initialization in order to calculate the constants, which are directly multiplied by the current and past error/measurement data. This way, `t` should not be changed frequently, as any change would require a new costly calculation of the constants.
+
+The algorithm was develop based on the [Standard PID Algorithm](http://www.acsysteme.com/en/serial-or-parallel-pid).
 
 ## Installation
 Simply copy both `PID.c` and `PID.h` into an appropriate location within your project's source folders. There are no dependencies associated with this implementation of the PID algorithm.
@@ -35,6 +37,8 @@ void function_to_be_executed_in_a_fixed_period_of_time(PID_t* pid) {
   write_to_some_actuator(output);
 }
 ```
+
+
 
 There are also implementations for setter functions. Be aware that, for maintaining a good computation performance, some of these shouldn't be called frequently, as they trigger constants recalculation, as explained previously. 
 
